@@ -17,6 +17,9 @@ app.use(
     })
 );
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 // authRoutes(app);
 require('./routes/authRoutes')(app);
 
