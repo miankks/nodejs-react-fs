@@ -22,23 +22,36 @@ passport.use(new GoogleStrategy({
         callbackURL: '/auth/google/callback',
         proxy: true
     },
-    (accessToken, refreshToken, profile, done) => {
-        User.findOne({
-            googleId: profile.id
-        }).then((existingUser) => {
+    // converted to async syntax
+    async (accessToken, refreshToken, profile, done) => {
+        const existingUser = await User.findOne({ googleId: profile.id })
             if (existingUser) {
                 // we already have a user
-                done(null, existingUser);
-            } else {
-                // we do not have a user record with this ID, make a new record
-                new User({
-                    googleId: profile.id
-                }).save().then(user => done(null, user));
+                return done(null, existingUser);
             }
-        })
-        // console.log('accessToken', accessToken);
-        // console.log('refreshtoken', refreshToken);
-        console.log('profile', profile);
-        // console.log('done', done)
+
+            // we do not have a user record with this ID, make a new record
+            const user = await new User({ googleId: profile.id }).save()
+            done(null, user);
     }
 ));
+
+// (accessToken, refreshToken, profile, done) => {
+//     User.findOne({
+//         googleId: profile.id
+//     }).then((existingUser) => {
+//         if (existingUser) {
+//             // we already have a user
+//             done(null, existingUser);
+//         } else {
+//             // we do not have a user record with this ID, make a new record
+//             new User({
+//                 googleId: profile.id
+//             }).save().then(user => done(null, user));
+//         }
+//     })
+    // console.log('accessToken', accessToken);
+    // console.log('refreshtoken', refreshToken);
+    // console.log('profile', profile);
+    // console.log('done', done)
+// }
