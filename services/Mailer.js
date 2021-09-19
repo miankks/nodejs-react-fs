@@ -8,6 +8,17 @@ class Mailer extends helper.Mail {
     super();
 
     // sgMail.setApiKey(keys.sendGridKey);
+    // const msg = {
+    //   to: 'techbilal85@gmail.com',
+    //   from: 'miankks85@gmail.com',
+    //   subject: 'Hello',
+    //   text: 'Hello from',
+    //   html: '<h1>Hello from sendgrip</h1>'
+    // }
+
+    // sgMail.send(msg).then(response => console.log('Email sent ...')).catch((error) => console.log(error.message));
+   
+    // sgMail.setApiKey(keys.sendGridKey);
     // const formattedRecipients = recipients.map(({email}) => email);
     // const msg = {
     //   to: formattedRecipients,
@@ -19,7 +30,7 @@ class Mailer extends helper.Mail {
 
     // this.sgApi = sendgrid(keys.sendGridKey);
     this.sgApi = sgMail.setApiKey(keys.sendGridKey);
-    this.from_email = new helper.Email('miankks@gmail.com');
+    this.from_email = new helper.Email('miankks85@gmail.com');
     this.subject = subject;
     this.body = new helper.Content('text/html', content);
     this.recipients = this.formatAddresses(recipients);
